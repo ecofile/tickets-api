@@ -16,7 +16,7 @@ public class TicketService {
 
     @Transactional(readOnly = true)
     public List<TicketResponse> listar() {
-        return repo.findAll().stream().map(TicketResponse::from).toList();
+        return repo.findAllConAsignado().stream().map(TicketResponse::from).toList();
     }
 
     @Transactional(readOnly = true)
