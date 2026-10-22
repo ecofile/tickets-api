@@ -30,8 +30,8 @@ La API arranca en `http://localhost:8080`.
 
 ## Próximos pasos
 
-- [ ] Capa de servicio y DTOs
-- [ ] Gestión global de errores con `@RestControllerAdvice` y `ProblemDetail`
+- [x] Capa de servicio y DTOs
+- [x] Gestión global de errores con `@RestControllerAdvice` y `ProblemDetail`
 - [ ] Relaciones entre entidades (tickets, usuarios, comentarios)
 - [ ] Tests con JUnit 5 y Mockito
 - [ ] Seguridad con Spring Security y JWT
