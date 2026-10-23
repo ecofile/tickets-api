@@ -9,13 +9,13 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-@RestController
-@RequestMapping("/api/tickets")
+@RestController                         // "esta clase atiende peticiones y devuelve datos (JSON)"
+@RequestMapping("/api/tickets")         // todas sus URLs empiezan por /api/tickets
 public class TicketController {
 
-    private final TicketService service;
+    private final TicketService service;              // lo que necesita para trabajar
 
-    public TicketController(TicketService service) {
+    public TicketController(TicketService service) {  // Spring se lo da ya creado
         this.service = service;
     }
 
@@ -24,9 +24,9 @@ public class TicketController {
         return service.listar();
     }
 
-    @GetMapping("/{id}")
-    public TicketResponse obtener(@PathVariable Long id) {
-        return service.obtener(id);
+    @GetMapping("/{id}")                               // atiende GET /api/tickets/ALGO
+    public TicketResponse obtener(@PathVariable Long id) {   // "ALGO" se mete en id (ya convertido a Long)
+        return service.obtener(id);                    // delega y devuelve lo que le den
     }
 
     @PostMapping

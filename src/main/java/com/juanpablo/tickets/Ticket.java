@@ -4,15 +4,15 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
-@Entity
+@Entity                                    // esta clase = tabla TICKET
 public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;					   			// clave primaria autogenerada
 
     @Column(nullable = false, length = 120)
-    private String titulo;
+    private String titulo;                           // columna TITULO VARCHAR(120) NOT NULL
 
     @Enumerated(EnumType.STRING)
     private Estado estado = Estado.ABIERTO;
@@ -20,8 +20,8 @@ public class Ticket {
     private LocalDateTime creadoEn = LocalDateTime.now();
     @ManyToOne(fetch = FetchType.LAZY)        // muchos tickets → un usuario; LAZY siempre
     @JoinColumn(name = "asignado_id")         // la FK en la tabla ticket
-    private Usuario asignado;
-
+    private Usuario asignado;                        // FK ASIGNADO_ID → tabla USUARIO
+    
     protected Ticket() { }                       // JPA lo exige
 
     public Ticket(String titulo) { this.titulo = titulo; }
