@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class TicketService {
 
     private final TicketRepository repo;    // su DAO
-
-    public TicketService(TicketRepository repo) {
+    private final ComentarioRepository comentarioRepo;
+    
+    public TicketService(TicketRepository repo, ComentarioRepository comentarioRepo) {
         this.repo = repo;
+        this.comentarioRepo = comentarioRepo;
     }
 
     @Transactional(readOnly = true)         // abre transacción de solo lectura; al salir, la cierra
@@ -24,6 +26,21 @@ public class TicketService {
         return repo.findById(id)                          // 1. busca en BD → Optional<Ticket>
                 .map(TicketResponse::from)                // 2. si existe, conviértelo a DTO
                 .orElseThrow(() -> new TicketNotFoundException(id));  // 3. si no, excepción
+    }
+    
+    @Transactional(readOnly = true)
+    public List<ComentarioResponse> comentarios(Long ticketId) {
+
+        // 1. Si el ticket no existe → 404
+        if (!repo.existsById(ticketId)) {
+            throw new TicketNotFoundException(ticketId);
+        }
+
+        // 2. Busca sus comentarios y conviértelos a DTO
+        return comentarioRepo.findByTicketIdOrderByCreadoEnAsc(ticketId)
+                .stream()
+                .map(ComentarioResponse::from)
+                .toList();
     }
 
     @Transactional
